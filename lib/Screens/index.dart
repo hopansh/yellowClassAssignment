@@ -39,7 +39,7 @@ class _IndexState extends State<Index> {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
-          toolbarHeight: height * 0.15,
+          toolbarHeight: height * 0.10,
           backgroundColor: Colors.white,
           elevation: 0,
           title: Text(
