@@ -53,6 +53,9 @@ class _AddMovieState extends State<AddMovie> {
         final res = await dbHelper.getMovie(colId);
         _titleController.text = res[0]['title'].toString();
         _directorController.text = res[0]['director'].toString();
+        setState(() {
+          _image = res[0]['poster'];
+        });
       }
     }
     _isInit = false;
