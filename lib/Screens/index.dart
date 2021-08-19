@@ -1,7 +1,6 @@
 import 'package:binged_movies/Screens/Components/MovieList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../helpers/dbHelper.dart';
 
 class Index extends StatefulWidget {
   @override
@@ -14,8 +13,6 @@ class _IndexState extends State<Index> {
   void initState() {
     super.initState();
   }
-
-  final dbHelper = DbHelper.instance;
 
   @override
   Widget build(BuildContext context) {

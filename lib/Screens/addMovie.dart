@@ -24,25 +24,17 @@ class _AddMovieState extends State<AddMovie> {
   var _initValues = {'_id': null, 'title': '', 'director': ''};
 
   var _image;
-  var base64;
+
   final ImagePicker _picker = ImagePicker();
   void _choose() async {
     try {
       final pickedFile = await _picker.pickImage(
         source: ImageSource.gallery,
       );
-      print("Image Uploaded");
-      print(pickedFile.path);
-      print("Image Uploaded Ended");
       setState(() {
         _image = pickedFile.path;
       });
     } catch (e) {}
-// file = await ImagePicker.pickImage(source: ImageSource.gallery);
-  }
-
-  String base64String(Uint8List data) {
-    return base64Encode(data);
   }
 
   @override
@@ -84,16 +76,16 @@ class _AddMovieState extends State<AddMovie> {
           DbHelper.colId: colId,
           DbHelper.colPoster: _image
         };
-
+        var type;
         print(_initValues);
         if (colId != null) {
           final id = await dbHelper.update(row);
-          print('inserted row id: $id');
+          type = "Edited";
         } else {
           final id = await dbHelper.insert(row);
-          print('inserted row id: $id');
+          type = "Added";
         }
-        Navigator.of(context).pop('Refresh');
+        Navigator.of(context).pop(type);
       } else {
         _initValues['title'] = "";
         _initValues['director'] = "";

@@ -35,6 +35,7 @@ class _MovieListState extends State<MovieList> {
 
   Future<void> _refreshMovies(BuildContext context) async {
     getData();
+    return "Success";
   }
 
   @override
@@ -47,11 +48,11 @@ class _MovieListState extends State<MovieList> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-
+    final scaffold = Scaffold.of(context);
     Widget _listTile(data, index) {
       return GestureDetector(
         onTap: () {
-          Navigator.pushNamed(context, "/view");
+          Navigator.pushNamed(context, "/view", arguments: data[index]['_id']);
         },
         child: Stack(
           children: [
@@ -64,7 +65,7 @@ class _MovieListState extends State<MovieList> {
                 color: Color(0xff1D1D28),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.blueGrey,
+                    color: Colors.deepOrangeAccent,
                     blurRadius: 2.0,
                     spreadRadius: 0.0,
                     offset: Offset(2.0, 2.0), // shadow direction: bottom right
@@ -96,7 +97,20 @@ class _MovieListState extends State<MovieList> {
                           onPressed: () {
                             Navigator.pushNamed(context, "/add",
                                     arguments: data[index]['_id'])
-                                .then((value) => _refreshMovies(context));
+                                .then((value) => {
+                                      if (value == "Added" || value == "Edited")
+                                        {
+                                          _refreshMovies(
+                                            context,
+                                          ),
+                                          scaffold.showSnackBar(SnackBar(
+                                            content: Text(
+                                                "Movie $value Successfully"),
+                                            backgroundColor: Colors.deepOrange,
+                                            duration: Duration(seconds: 1),
+                                          ))
+                                        }
+                                    });
                           },
                           icon: Icon(Icons.edit,
                               size: 30, color: Colors.blueGrey[100])),
@@ -193,7 +207,23 @@ class _MovieListState extends State<MovieList> {
                             child: IconButton(
                                 onPressed: () {
                                   Navigator.pushNamed(context, "/add")
-                                      .then((value) => _refreshMovies(context));
+                                      .then((value) => {
+                                            if (value == "Added" ||
+                                                value == "Edited")
+                                              {
+                                                _refreshMovies(
+                                                  context,
+                                                ),
+                                                scaffold.showSnackBar(SnackBar(
+                                                  content: Text(
+                                                      "Movie $value Successfully"),
+                                                  backgroundColor:
+                                                      Colors.deepOrange,
+                                                  duration:
+                                                      Duration(seconds: 1),
+                                                ))
+                                              }
+                                          });
                                   ;
                                 },
                                 icon: Icon(
@@ -206,7 +236,7 @@ class _MovieListState extends State<MovieList> {
                       ),
                     ),
                     Container(
-                      height: height * 0.87,
+                      height: height * 0.85,
                       child: ListView.builder(
                           itemCount: mainData.length == 0 ? 1 : mainData.length,
                           itemBuilder: (context, index) {

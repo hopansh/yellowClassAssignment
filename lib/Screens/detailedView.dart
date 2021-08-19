@@ -1,7 +1,43 @@
+import 'dart:io';
+
+import 'package:binged_movies/helpers/dbHelper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class DetailedView extends StatelessWidget {
+class DetailedView extends StatefulWidget {
+  @override
+  _DetailedViewState createState() => _DetailedViewState();
+}
+
+class _DetailedViewState extends State<DetailedView> {
+  var _isInit = true;
+  final dbHelper = DbHelper.instance;
+  var title = "";
+  var director = "";
+  var image;
+
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      final colId = ModalRoute.of(context).settings.arguments;
+      if (colId != null) {
+        final res = await dbHelper.getMovie(colId);
+        setState(() {
+          title = res[0]['title'].toString();
+          director = res[0]['director'].toString();
+          image = res[0]['poster'];
+        });
+      }
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,22 +52,25 @@ class DetailedView extends StatelessWidget {
               SizedBox(
                 height: 20.0,
               ),
-              Image(
-                image: NetworkImage(
-                    "https://terrigen-cdn-dev.marvel.com/content/prod/1x/avengersendgame_lob_crd_05.jpg"),
-                fit: BoxFit.cover,
+              Text(
+                title,
+                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+              ),
+              Text(
+                "Director: " + director,
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
               ),
               SizedBox(
                 height: 20.0,
               ),
-              Text(
-                "Avengers",
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "Director: Kevin Feige",
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),
-              ),
+              image != null
+                  ? Image.file(
+                      File(image),
+                      height: 500,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    )
+                  : CircularProgressIndicator(),
             ])));
   }
 }

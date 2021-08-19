@@ -1,8 +1,17 @@
 import 'package:binged_movies/Screens/addMovie.dart';
 import 'package:binged_movies/Screens/detailedView.dart';
 import 'package:binged_movies/Screens/index.dart';
+// import 'package:binged_movies/Screens/loginScreen.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
+// Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp();
+//   await FirebaseAuth.instance.useAuthEmulator('localhost', 9099);
+//   runApp(MyApp());
+// }
 void main() {
   runApp(MyApp());
 }
@@ -32,6 +41,7 @@ class MyApp extends StatelessWidget {
                     fontWeight: FontWeight.bold))),
         initialRoute: "/",
         routes: {
+          // '/login': (context) => LoginScreen(),
           '/': (context) => Index(),
           '/add': (context) => AddMovie(),
           '/view': (context) => DetailedView(),
