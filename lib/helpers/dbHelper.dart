@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:binged_movies/models/movie.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,6 +11,7 @@ class DbHelper {
   static final colId = "_id";
   static final colTitle = 'title';
   static final colDirector = 'director';
+  static final colPoster = 'poster';
 
   DbHelper._privateConstructor();
   static final DbHelper instance = DbHelper._privateConstructor();
@@ -34,7 +34,8 @@ class DbHelper {
           CREATE TABLE $table (
             $colId INTEGER PRIMARY KEY,
             $colTitle TEXT NOT NULL,
-            $colDirector INTEGER NOT NULL
+            $colDirector TEXT NOT NULL,
+            $colPoster TEXT
           )
           ''');
   }
@@ -47,6 +48,12 @@ class DbHelper {
   Future<List<Map<String, dynamic>>> getMovieList() async {
     Database db = await instance.database;
     return await db.query(table);
+  }
+
+  Future<List<Map<String, dynamic>>> getMovie(id) async {
+    print('ID: $id');
+    Database db = await instance.database;
+    return await db.query(table, where: '$colId = ?', whereArgs: [id]);
   }
 
   Future<int> update(Map<String, dynamic> row) async {

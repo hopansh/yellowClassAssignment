@@ -1,4 +1,3 @@
-import 'package:binged_movies/Screens/Components/MovieList.dart';
 import 'package:binged_movies/Screens/addMovie.dart';
 import 'package:binged_movies/Screens/detailedView.dart';
 import 'package:binged_movies/Screens/index.dart';
@@ -14,10 +13,18 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'Binged Movies',
         debugShowCheckedModeBanner: false,
+        color: Colors.white,
         theme: ThemeData(
             primarySwatch: Colors.deepOrange,
-            accentColor: Colors.deepOrangeAccent,
-            canvasColor: Colors.white,
+            accentColor: Colors.deepOrange,
+            primaryColor: Colors.white,
+            textTheme: Theme.of(context).textTheme.apply(
+                  bodyColor: Colors.white,
+                  displayColor: Colors.white,
+                ),
+            canvasColor: Color(0xff1D1D28),
+            splashColor: Colors.deepOrangeAccent,
+            iconTheme: IconThemeData(color: Colors.white),
             primaryTextTheme: TextTheme(
                 headline6: TextStyle(
                     color: Colors.deepOrange,
