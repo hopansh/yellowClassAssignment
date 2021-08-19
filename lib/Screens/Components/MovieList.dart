@@ -176,7 +176,12 @@ class _MovieListState extends State<MovieList> {
                     setState(() {
                       alert = false;
                     });
-                    _refreshMovies(context);
+                    _refreshMovies(context)
+                        .then((value) => scaffold.showSnackBar(SnackBar(
+                              content: Text("Movie Deleted"),
+                              backgroundColor: Colors.red,
+                              duration: Duration(seconds: 1),
+                            )));
                   },
                   child: Text("Delete"))
             ],
