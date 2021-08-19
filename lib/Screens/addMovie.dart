@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -79,10 +77,10 @@ class _AddMovieState extends State<AddMovie> {
         var type;
         print(_initValues);
         if (colId != null) {
-          final id = await dbHelper.update(row);
+          await dbHelper.update(row);
           type = "Edited";
         } else {
-          final id = await dbHelper.insert(row);
+          await dbHelper.insert(row);
           type = "Added";
         }
         Navigator.of(context).pop(type);

@@ -172,7 +172,7 @@ class _MovieListState extends State<MovieList> {
                   child: Text("Cancel")),
               TextButton(
                   onPressed: () async {
-                    final response = await dbHelper.delete(delIndex);
+                    await dbHelper.delete(delIndex);
                     setState(() {
                       alert = false;
                     });
@@ -229,7 +229,6 @@ class _MovieListState extends State<MovieList> {
                                                 ))
                                               }
                                           });
-                                  ;
                                 },
                                 icon: Icon(
                                   Icons.add_circle,
